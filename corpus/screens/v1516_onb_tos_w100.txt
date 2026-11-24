@@ -1,0 +1,35 @@
+[?2026$p[?2027$p]11;?]11;?[>4m[?1049h[?25l[?5W[?2004h[>4;2m[>5u[?u[H[2JWelcome to [38;5;69mAntigravity CLI[m!
+
+[1mChoose your color scheme:[m        [90m╭─────────────────────────────────────────────────────────────╮[m[4;34H[90m│[m [34;1m> you: [madd a greeting function[30X[96G[90m│[m
+  > terminal[21X[5;34H[90m│[m[61X[96G[90m│[m
+[5Glight[24X[6;34H[90m│[m [32;1m  Here's the change:[m[40X[96G[90m│[m
+[5Gsolarized light[14X[7;34H[90m│[m[61X[96G[90m│[m
+[5Gcolorblind-friendly light    [90m│[m   [90m3 [m    [94;1mimport[m [33m"fmt"[m[40X[96G[90m│[m
+[5Gdark[25X[9;34H[90m│[m   [90m4 [m[56X[96G[90m│[m
+[5Gsolarized dark[15X[10;34H[90m│[m   [90m5 [39;48;5;131m [31m-  [94;1mfunc[39;22m [34mmain[39m() {[38X[95G[m [90m│[m
+[5Gcolorblind-friendly dark     [90m│[m   [90m5 [39;48;5;65m [32m+  [94;1mfunc[39;22m [34mgreet[39m(name [35mstring[39m) {[26X[95G[m [90m│[m
+[5Gtokyo night[18X[12;34H[90m│[m   [90m6 [39;48;5;65m [32m+  [39m    fmt.[34mPrintf[39m([33m"Hello, %s!\n"[39m, name)[15X[95G[m [90m│[m[13;34H[90m│[m   [90m7 [m    }[51X[96G[90m│[m[14;34H[90m│[m[61X[96G[90m│[m[15;34H[90m│[m [37m  ▾ Thought Process[m[41X[96G[90m│[m[16;34H[90m│[m [37m    I need to add a greeting function. I'll use fmt.Printf.[m [90m│[m[17;34H[90m│[m [33m  ⚙ tool: [mwrite_file main.go[32X[96G[90m│[m[18;34H[90m│[m [35m  ◉ task: [mImplementing greeting[29X[96G[90m│[m[19;34H[90m│[m [31m  ✗ error: [mcompilation failed[31X[96G[90m│[m[20;34H[90m│[m [33m  ⚠ warning: [mdeprecation warning[28X[96G[90m│[m[21;34H[90m│[m   → link: [34;4mfile:///path/to/main.go[m[27X[96G[90m│[m[22;34H[90m│[m [94;1m  ★ accent: [mhighlighted text[32X[96G[90m│[m[23;34H[90m│[m [90m  · dim: press Enter to continue[m[28X[96G[90m│[m[24;34H[90m╰─────────────────────────────────────────────────────────────╯[m
+
+[5G[32;1m[Next][m
+
+  [94;1m↑/↓[90;22m Navigate · [94;1menter[90;22m Confirm[m[29;81H[2mGemini 3.1 Pro · low[m[8;44H[38;5;173mimport[m [38;5;114m"fmt"[m[10;40H[48;5;52m [31m-  [38;5;173mfunc[39m [38;5;110mmain[39m() {[38X[m[11;40H[48;5;22m [32m+  [38;5;173mfunc[39m [38;5;110mgreet[39m([38;5;146mname[39m [38;5;222mstring[39m) {[26X[m[12;40H[48;5;22m [32m+  [39m    [38;5;146mfmt[39m.[38;5;110mPrintf[39m([38;5;114m"Hello, %s!\n"[39m, [38;5;146mname[39m)[15X[m[8B[5M[H[1mTerms of Service & Data Use[m
+
+AI coding agents are known to have certain security risks, including autonomous code execution, data
+exfiltration, prompt injection and supply chain risks. Ensure that you monitor and verify all[K
+actions taken by the agent.[K
+[K
+----------------------------------------------------------------------------------------------------
+[K
+  > [x] Yes, I agree to help improve Antigravity CLI by allowing[K
+[5G  Google to collect and use my Interactions data,[K
+[5G  subject to the Google Antigravity CLI Terms of Service[K
+[5G  and Google Privacy Policy. I understand I can[K
+[7Gchoose to opt out later whenever I want via my[K
+[7Gsettings.[K
+[K
+[7GLinks:[K
+[7G- Terms of Service: https://antigravity.google/terms[K
+[7G- Privacy Policy: https://policies.google.com/privacy[K
+[K
+[5G[34;1m[Previous][m      [32;1m[Done][m
+[K[23;24H[90mToggle[m[K

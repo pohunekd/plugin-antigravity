@@ -1,0 +1,163 @@
+# Detection manifest for the Antigravity CLI runtime (detection-only, v0.1.0).
+#
+# Verified against real PTY captures of Antigravity CLI 1.5.16 and 1.5.13
+# across terminal widths 40 to 120 in both inline (`altScreenMode = "default"`)
+# and alt-screen (`altScreenMode = "always"`) modes.
+#
+# Antigravity CLI natively reports OSC 7501 program-status records with
+# `app=antigravity` once the session worker answers its `ESC ] 7501 ; ? ST`
+# startup probe:
+#   - blocked:kind=auth       (unauthenticated sign-in / OAuth screens)
+#   - blocked:kind=question   (onboarding setup, ask_question dialogs)
+#   - blocked:kind=permission (workspace trust, command/file approvals)
+#   - error                   (settings error screen)
+#   - idle / done             (ready at composer)
+#   - working                 (active turn)
+#
+# Screen rules backstop OSC 7501 and classify replayed screens in `detect-check`:
+# - Every blocked rule sets `visible_blocker = true`, so a visible dialog or
+#   onboarding page always wins over a held program-status record.
+# - Mid-turn dialogs (`approval_command`, `approval_file`, `question_dialog`)
+#   replace the composer and match only the static footer rows below the last
+#   horizontal rule (`after_last_horizontal_rule`), anchored to `\z`, so a
+#   transcript quoting dialog phrases above the live composer never matches.
+# - Startup and onboarding screens (`login_method`, `login_oauth_url`,
+#   `onboarding_color_scheme`, `onboarding_tos`, `workspace_trust`,
+#   `settings_error`) match their ordered multi-line frame anchored to `\z`
+#   and reject any screen showing a live composer.
+# - While a turn is running, the composer remains drawn with `esc to cancel`
+#   on the footer row directly beneath its bottom horizontal rule; when idle,
+#   the footer shows `? for shortcuts` or the model indicator without
+#   `esc to cancel`.
+
+[program_status]
+app = "antigravity"
+answer_probe = true
+
+[process]
+comm = ['^(agy|antigravity)$']
+cmdline = ['^(\S*/)?(agy|antigravity)($| )']
+
+[[rules]]
+id = "approval_command"
+state = "blocked"
+priority = 950
+region = "after_last_horizontal_rule"
+visible_blocker = true
+# Command permission dialog below its horizontal rule: `Run this command?`,
+# option `1. Yes, run command`, cancel option `No, cancel`, navigation hint,
+# and `esc to cancel` footer at screen end (may wrap onto a second line at
+# width 40).
+regex = '(?s)Run\s+this\s+command\?.*?1\.\s+Yes,\s+run\s+command.*?No,\s+cancel.*?\x{2191}/\x{2193}\s+Navigate.*?esc\s+to\s+cancel[^\n]*(?:\n[^\n]*)?\s*\z'
+
+[[rules]]
+id = "approval_file"
+state = "blocked"
+priority = 950
+region = "after_last_horizontal_rule"
+visible_blocker = true
+# File create / edit / delete permission dialog below its horizontal rule:
+# `Allow ...?` or `Accept ...?` prompt, numbered `1. Yes,` and `2. No,` rows,
+# navigation hint, and `esc to cancel` footer at screen end.
+regex = '(?s)(?:Allow|Accept)\s+[^\n?]+\?.*?1\.\s+Yes,.*?2\.\s+No,.*?\x{2191}/\x{2193}\s+Navigate.*?esc\s+to\s+cancel[^\n]*(?:\n[^\n]*)?\s*\z'
+
+[[rules]]
+id = "question_dialog"
+state = "blocked"
+priority = 950
+region = "after_last_horizontal_rule"
+visible_blocker = true
+# Mid-turn single-select and multi-select question dialog below its horizontal
+# rule: `Question <n>/<m>:`, numbered options starting at `1.`, the final
+# `Write-in...` row, the `↑/↓ Navigate ... esc Skip` key hint, and the
+# `esc to cancel` footer at screen end.
+regex = '(?s)Question\s+[0-9]+/[0-9]+:.*?1\.\s.*?[0-9]+\.\s+Write-in\.\.\..*?\x{2191}/\x{2193}\s+Navigate.*?esc\s+Skip.*?esc\s+to\s+cancel[^\n]*(?:\n[^\n]*)?\s*\z'
+
+[[rules]]
+id = "workspace_trust"
+state = "blocked"
+priority = 940
+region = "whole_recent"
+visible_blocker = true
+# Startup workspace trust dialog: `Do you trust the contents of this project?`,
+# `Yes, I trust this folder`, `No, exit`, and the `↑/↓ Navigate · enter Confirm`
+# footer at screen end (with at most the model status row below it).
+regex = '(?s)Do\s+you\s+trust\s+the\s+contents\s+of\s+this\s+project\?.*?Yes,\s+I\s+trust\s+this\s+folder.*?No,\s+exit.*?\x{2191}/\x{2193}\s+Navigate\s+\x{00b7}\s+enter\s+Confirm[^\n]*(?:\n[^\n]*){0,2}\s*\z'
+not = { regex = '\x{2500}{10,}\n>[^\n]*\n\x{2500}{10,}' }
+
+[[rules]]
+id = "settings_error"
+state = "blocked"
+priority = 940
+region = "whole_recent"
+visible_blocker = true
+# Startup settings validation dialog: `Settings Error`, recovery choices
+# (`Exit and fix manually`, `Continue with defaults this session`), and the
+# `enter Confirm · esc Exit` footer at screen end.
+regex = '(?s)Settings\s+Error.*?Exit\s+and\s+fix\s+manually.*?Continue\s+with\s+defaults\s+this\s+session.*?enter\s+Confirm\s+\x{00b7}\s+esc\s+Exit[^\n]*(?:\n[^\n]*){0,2}\s*\z'
+not = { regex = '\x{2500}{10,}\n>[^\n]*\n\x{2500}{10,}' }
+
+[[rules]]
+id = "login_method"
+state = "blocked"
+priority = 930
+region = "whole_recent"
+visible_blocker = true
+# Unauthenticated sign-in menu (initial method picker and Google Cloud
+# sign-in submenu): banner, method heading, numbered options 1 and 2, and
+# `↑/↓ Navigate · enter Select` footer at screen end.
+regex = '(?s)Welcome\s+to\s+the\s+Antigravity\s+CLI\.\s+You\s+are\s+currently\s+not\s+signed\s+in\..*?(?:Select\s+login\s+method:|Google\s+Cloud\s+sign-in\s+method:).*?1\.\s.*?2\.\s.*?\x{2191}/\x{2193}\s+Navigate\s+\x{00b7}\s+enter\s+Select[^\n]*(?:\n[^\n]*){0,2}\s*\z'
+not = { regex = '\x{2500}{10,}\n>[^\n]*\n\x{2500}{10,}' }
+
+[[rules]]
+id = "login_oauth_url"
+state = "blocked"
+priority = 930
+region = "whole_recent"
+visible_blocker = true
+# Remote SSH / manual OAuth sign-in screen waiting for an authorization code.
+regex = '(?s)Open\s+the\s+URL\s+below\s+in\s+your\s+browser:.*?Click\s+here\s+to\s+authenticate.*?After\s+authenticating,\s+copy\s+the\s+code\s+displayed\s+in\s+the\s+browser[^\n]*(?:\n[^\n]*){0,5}\s*\z'
+not = { regex = '\x{2500}{10,}\n>[^\n]*\n\x{2500}{10,}' }
+
+[[rules]]
+id = "onboarding_color_scheme"
+state = "blocked"
+priority = 930
+region = "whole_recent"
+visible_blocker = true
+# First-run onboarding step 1: color scheme selector with preview box, `[Next]`
+# button, and `↑/↓ Navigate · enter Confirm` footer at screen end.
+regex = '(?s)Welcome\s+to\s+Antigravity\s+CLI!.*?Choose\s+your\s+color\s+scheme:.*?\[Next\].*?\x{2191}/\x{2193}\s+Navigate\s+\x{00b7}\s+enter\s+Confirm[^\n]*(?:\n[^\n]*){0,2}\s*\z'
+not = { regex = '\x{2500}{10,}\n>[^\n]*\n\x{2500}{10,}' }
+
+[[rules]]
+id = "onboarding_tos"
+state = "blocked"
+priority = 930
+region = "whole_recent"
+visible_blocker = true
+# First-run onboarding step 2: Terms of Service & Data Use acceptance screen.
+regex = '(?s)Terms\s+of\s+Service\s+&\s+Data\s+Use.*?\[Previous\].*?(?:\[Done\]|> +Done)(?:\n[^\n]*){0,6}\s*\z'
+not = { regex = '\x{2500}{10,}\n>[^\n]*\n\x{2500}{10,}' }
+
+[[rules]]
+id = "working_composer"
+state = "working"
+priority = 700
+region = "bottom_non_empty_lines(16)"
+# Live composer while a turn is running: top horizontal rule, `>` composer row
+# (plus optional wrapped draft lines), bottom horizontal rule, and the
+# `esc to cancel` footer directly below it at screen end.
+regex = '(?s)\x{2500}{10,}\n>[^\n]*(?:\n[^\n\x{2500}][^\n]*){0,8}\n\x{2500}{10,}\nesc to cancel[^\n]*(?:\n[^\n]*)?\z'
+
+[[rules]]
+id = "idle_composer"
+state = "idle"
+priority = 300
+region = "bottom_non_empty_lines(16)"
+# Live idle composer: top horizontal rule, `>` prompt row (empty, mode hint,
+# or typed draft), bottom horizontal rule, and either the `? for shortcuts`
+# footer (inline 1-row or alt-screen 2-row) or a non-`esc to cancel` model
+# status row when draft text hides `? for shortcuts`.
+regex = '(?s)\x{2500}{10,}\n>[^\n]*(?:\n[^\n\x{2500}][^\n]*){0,8}\n\x{2500}{10,}\n(?:\? for shortcuts[^\n]*(?:\n[^\n]*)?|[ \t]+\S[^\n]*)\z'
+not = { line_regex = '^esc to cancel' }

@@ -1,0 +1,264 @@
+# Corpus of committed Antigravity CLI screens classified by package/detect.toml.
+# Each case names a raw terminal capture under screens/, its replay width, and
+# the expected activity (`working`, `blocked`, `idle`, `unknown`).
+
+[[case]]
+screen = "v1516_login_menu_w40.txt"
+width = 40
+expect = "blocked"
+
+[[case]]
+screen = "v1516_login_menu_w80.txt"
+width = 80
+expect = "blocked"
+
+[[case]]
+screen = "v1516_login_gcp_w80.txt"
+width = 80
+expect = "blocked"
+
+[[case]]
+screen = "v1516_login_menu_w120.txt"
+width = 120
+expect = "blocked"
+
+[[case]]
+screen = "v1516_login_gcp_w120.txt"
+width = 120
+expect = "blocked"
+
+[[case]]
+screen = "v1516_login_ssh_oauth_w100.txt"
+width = 100
+expect = "blocked"
+
+[[case]]
+screen = "v1516_onb_color_w100.txt"
+width = 100
+expect = "blocked"
+
+[[case]]
+screen = "v1516_onb_tos_w100.txt"
+width = 100
+expect = "blocked"
+
+[[case]]
+screen = "v1516_onb_color_w80.txt"
+width = 80
+expect = "blocked"
+
+[[case]]
+screen = "v1516_onb_tos_w80.txt"
+width = 80
+expect = "blocked"
+
+[[case]]
+screen = "v1516_trust_w40.txt"
+width = 40
+expect = "blocked"
+
+[[case]]
+screen = "v1516_trust_w80.txt"
+width = 80
+expect = "blocked"
+
+[[case]]
+screen = "v1516_trust_w100.txt"
+width = 100
+expect = "blocked"
+
+[[case]]
+screen = "v1516_settings_error_w60.txt"
+width = 60
+expect = "blocked"
+
+[[case]]
+screen = "v1516_settings_error_w80.txt"
+width = 80
+expect = "blocked"
+
+[[case]]
+screen = "v1516_settings_error_w100.txt"
+width = 100
+expect = "blocked"
+
+[[case]]
+screen = "v1516_idle_default_w40.txt"
+width = 40
+expect = "idle"
+
+[[case]]
+screen = "v1516_idle_default_w60.txt"
+width = 60
+expect = "idle"
+
+[[case]]
+screen = "v1516_idle_default_w80.txt"
+width = 80
+expect = "idle"
+
+[[case]]
+screen = "v1516_idle_default_w120.txt"
+width = 120
+expect = "idle"
+
+[[case]]
+screen = "v1516_idle_accept_edits_w80.txt"
+width = 80
+expect = "idle"
+
+[[case]]
+screen = "v1516_idle_auto_w80.txt"
+width = 80
+expect = "idle"
+
+[[case]]
+screen = "v1516_idle_plan_w80.txt"
+width = 80
+expect = "idle"
+
+[[case]]
+screen = "v1516_idle_draft_w80.txt"
+width = 80
+expect = "idle"
+
+[[case]]
+screen = "v1516_idle_altscreen_w80.txt"
+width = 80
+expect = "idle"
+
+[[case]]
+screen = "v1516_idle_altscreen_w120.txt"
+width = 120
+expect = "idle"
+
+[[case]]
+screen = "v1513_idle_default_w80.txt"
+width = 80
+expect = "idle"
+
+[[case]]
+screen = "v1513_working_w80.txt"
+width = 80
+expect = "working"
+
+[[case]]
+screen = "v1513_idle_post_turn_w80.txt"
+width = 80
+expect = "idle"
+
+[[case]]
+screen = "v1516_working_w40.txt"
+width = 40
+expect = "working"
+
+[[case]]
+screen = "v1516_idle_post_turn_w40.txt"
+width = 40
+expect = "idle"
+
+[[case]]
+screen = "v1516_working_w80.txt"
+width = 80
+expect = "working"
+
+[[case]]
+screen = "v1516_idle_post_turn_w80.txt"
+width = 80
+expect = "idle"
+
+[[case]]
+screen = "v1516_working_w120.txt"
+width = 120
+expect = "working"
+
+[[case]]
+screen = "v1516_idle_post_turn_w120.txt"
+width = 120
+expect = "idle"
+
+[[case]]
+screen = "v1516_approval_cmd_w40.txt"
+width = 40
+expect = "blocked"
+
+[[case]]
+screen = "v1516_approval_cmd_w80.txt"
+width = 80
+expect = "blocked"
+
+[[case]]
+screen = "v1516_approval_cmd_w120.txt"
+width = 120
+expect = "blocked"
+
+[[case]]
+screen = "v1516_approval_write_w60.txt"
+width = 60
+expect = "blocked"
+
+[[case]]
+screen = "v1516_approval_write_w80.txt"
+width = 80
+expect = "blocked"
+
+[[case]]
+screen = "v1516_approval_write_w100.txt"
+width = 100
+expect = "blocked"
+
+[[case]]
+screen = "v1516_approval_edit_w60.txt"
+width = 60
+expect = "blocked"
+
+[[case]]
+screen = "v1516_approval_edit_w80.txt"
+width = 80
+expect = "blocked"
+
+[[case]]
+screen = "v1516_approval_edit_w100.txt"
+width = 100
+expect = "blocked"
+
+[[case]]
+screen = "v1516_question_single_w40.txt"
+width = 40
+expect = "blocked"
+
+[[case]]
+screen = "v1516_question_single_w80.txt"
+width = 80
+expect = "blocked"
+
+[[case]]
+screen = "v1516_question_single_w120.txt"
+width = 120
+expect = "blocked"
+
+[[case]]
+screen = "v1516_question_multi_w60.txt"
+width = 60
+expect = "blocked"
+
+[[case]]
+screen = "v1516_question_multi_w80.txt"
+width = 80
+expect = "blocked"
+
+[[case]]
+screen = "v1516_question_multi_w100.txt"
+width = 100
+expect = "blocked"
+
+[[case]]
+screen = "neg_v1516_quote_dialogs_idle_w80.txt"
+width = 80
+expect = "idle"
+
+[[case]]
+screen = "neg_v1516_quote_dialogs_idle_w120.txt"
+width = 120
+expect = "idle"
+

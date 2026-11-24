@@ -1,0 +1,53 @@
+# Runtime descriptor of the Antigravity CLI package (detection-only, v0.1.0).
+#
+# Verified against Antigravity CLI 1.5.16 (compat/RELEASE) and 1.5.13.
+# The supported release range is `[min, below)`: `below` stays at the next
+# minor until captures of a newer release pass.
+
+schema = 1
+id = "pohunek.runtime.agy"
+version = "0.1.0"
+runtime_api = 1
+requires = [
+    "launch-env-v1",
+    "placement-v1",
+    "input-refuse-while-blocked-v1",
+]
+
+[runtime]
+id = "agy"
+name = "Antigravity CLI"
+program = "agy"
+args = []
+detect_manifest = "detect.toml"
+# Typed into the composer once it is drawn: agy rejects positional prompt
+# arguments (exit 2, "unexpected argument ... Prompts are read only from
+# -p/--print, -i/--prompt-interactive, or stdin").
+prompt_arg = false
+# `agy --version` prints a bare `MAJOR.MINOR.PATCH` release on stdout.
+version_probe = { parser = "semver-v1", args = ["--version"], min = "1.5.13", below = "1.6.0" }
+
+# Disable the background self-updater so a pinned release cannot replace itself
+# under a running host.
+[launch_env]
+AGY_CLI_DISABLE_AUTO_UPDATE = "true"
+
+# Antigravity CLI enables bracketed paste (`?2004h`) during startup before
+# rendering the idle composer (including on sign-in and onboarding screens),
+# so only the rendered composer (`idle_composer`) signals input readiness.
+[input]
+bracketed_paste = true
+submit_delay_ms = 150
+text_policy = "unrestricted"
+ready = "screen_idle"
+refuse_while_blocked = true
+startup_grace_ms = 20000
+
+[placement]
+mode = "in_process"
+
+[resume]
+supported = false
+
+[native_reference]
+strategy = "none"

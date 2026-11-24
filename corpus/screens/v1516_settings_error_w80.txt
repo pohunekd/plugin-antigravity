@@ -1,0 +1,12 @@
+[?2026$p[?2027$p]11;?[>4m[?1049h[?25l[?5W[?2004h[>4;2m[>5u[?u[H[2J[38;5;172;1m⚠ Settings Error[m
+
+  [1m/work/home/.gemini/antigravity-cli/settings.json[m
+  └ [90minvalid settings: colorScheme: unrecognized value "not-a-valid-theme"[m
+
+[90mNothing has been written to your file yet.[m
+
+[94m> Exit and fix manually[m
+  Continue with defaults this session
+  Overwrite the file with defaults
+
+  [94;1menter[90;22m Confirm · [94;1mesc[90;22m Exit[m[13;61H[2mGemini 3.1 Pro · low[m

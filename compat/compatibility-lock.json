@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "package": "pohunek.runtime.agy",
+  "runtime": "agy",
+  "upstream": {
+    "product": "Google Antigravity CLI",
+    "release": "1.5.16",
+    "binary": "agy",
+    "version_output": "{release}",
+    "archives": {
+      "linux_x86_64": {
+        "url": "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.5.16-5250855658717184/linux-x64/cli_linux_x64.tar.gz",
+        "sha512": "3dee9f26e298156db673f6ce2a0f5dfed5b30006e04ceb9809c68070e7b717587b33a3da0f8bc2eda45af81a50bc8b14c82b28ae5832bcfe3e7fd49397117b31"
+      },
+      "darwin_arm64": {
+        "url": "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.5.16-5250855658717184/darwin-arm/cli_mac_arm64.tar.gz",
+        "sha512": "33f5617dc74fea606d47b2483c6d271c850c9f3c9c55b724c664c3c0d4b82100d819fbcf55714f851765f6628d4296883ac8939b4fdeb55d5e6b9ce923135d18"
+      }
+    }
+  },
+  "supported": {
+    "min": "1.5.13",
+    "below": "1.6.0"
+  },
+  "verified_with": "2026-11-24 on core v0.44.0: pinned linux_x86_64 archive of agy 1.5.16 installed and SHA-512 verified via scripts/install-upstream.sh (darwin_arm64 URL and SHA-512 recorded from official manifest, not executed on Linux); host agy 1.5.13 also captured and verified; agy --version prints bare 1.5.16 / 1.5.13 exit 0 in 102-145 ms; cold start to OSC 7501 state=idle:app=antigravity 0.14-0.27 s (startup_grace_ms 20000); OSC 7501 probe ESC]7501;? answered and verified across login (blocked:kind=auth), onboarding (blocked:kind=question), workspace trust (blocked:kind=permission), settings error (error), idle (idle), working (working), turn done (done), command/file approvals (blocked:kind=permission), and ask_question (blocked:kind=question); in-process single-process placement verified; kit lint ok (pohunek.runtime.agy 0.1.0 agy), double build cmp identical (sha256:9330c02eb6079586fb8c6717cb964d585e968e31ab68378f5feba63f3fb19d56), verify ok, detect-check ok 52/52 cases (widths 40-120, inline and altScreenMode=always, 1.5.16 and 1.5.13, plus 2 adversarial dialog-quote negatives reading idle), revert proofs passed for all 9 blocked rules, path-check ok 52/52 screens with 0 operator tokens; live kit smoke with scripts/smoke-agy.sh ok (lock-range, version-probe, login-blocked, session_input_blocked refusal)."
+}
